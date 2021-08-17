@@ -7,11 +7,29 @@
 --extra-index-url https://sociaro-pypi:Wg87x6mm2tmnp7VYodZ_@gitlab.com/api/v4/projects/21945455/packages/pypi/simple
 --trusted-host gitlab.com
 
+apscheduler==3.7.0
+    # via django-apscheduler
 asgiref==3.4.1
     # via django
 django==3.2.6
+    # via
+    #   -r requirements.in
+    #   django-apscheduler
+    #   djangorestframework
+django-apscheduler==0.6.0
+    # via -r requirements.in
+djangorestframework==3.12.4
     # via -r requirements.in
 pytz==2021.1
-    # via django
+    # via
+    #   apscheduler
+    #   django
+six==1.16.0
+    # via apscheduler
 sqlparse==0.4.1
     # via django
+tzlocal==2.1
+    # via apscheduler
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools
