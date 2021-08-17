@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime
 
 from django.conf import settings
 
@@ -19,17 +20,25 @@ def my_job():
     for app in App.objects.all():
         last_log = AppLog.objects.filter(app_id=app.app_id).first()
         if not last_log:
-            return
-        if last_log.created < 60:
-            continue
-        else:
             send_mail(
-                f'App id({app.app_id} fall.)',
-                f'Last message from {app.app_id} was was received at {last_log.created}',
+                f'App id({app.app_id}) did not work!',
+                f'App id({app.app_id}) did not start work&',
                 'from@example.com',
                 ['to@example.com'],
                 fail_silently=False,
             )
+        else:
+            diff = last_log.created.replace(tzinfo=None) - datetime.now()
+            if diff.seconds < 5:
+                continue
+            else:
+                send_mail(
+                    f'App id({app.app_id}) did not work!',
+                    f'Last message from {app.app_id} was was received at {last_log.created}',
+                    'from@example.com',
+                    ['to@example.com'],
+                    fail_silently=False,
+                )
 
 
 @util.close_old_connections
